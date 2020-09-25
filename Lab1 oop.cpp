@@ -69,16 +69,47 @@ void showElementsOfArray(int** arr, int ROWS, int COLS) { // показать м
 
 void findMinElements(int** arr, int ROWS, int COLS, int& ROW_index, int& COL_index, int& minElement) {
 
-	ROW_index = 0;
-	COL_index = 0;
-	minElement = arr[0][0];
+	if (COLS > 1) {
+		ROW_index = 0;
+		COL_index = 1;
+	}
+	else {
+		ROW_index = 1;
+		COL_index = 0;
+	}
 
-	for (int i = 0; i < ROWS; i++) {
-		for (int j = 0; j < COLS; j++) {
-			if (arr[i][j] < minElement) {
-				minElement = arr[i][j];
-				ROW_index = i;
-				COL_index = j;
+	minElement = arr[ROW_index][COL_index];
+
+	if (COLS % 2 == 0) {
+		for (int i = 0; i < ROWS; i++) {
+			for (int j = 1; j < COLS; j +=2) {
+				if (arr[i][j] < minElement) {
+					minElement = arr[i][j];
+					ROW_index = i;
+					COL_index = j;
+				}
+			}
+		}
+	}
+	else {
+		for (int i = 0, g = 1; i < ROWS; i++, g++) {
+			if (g % 2 == 0) {
+				for (int j = 0; j < COLS; j += 2) {
+					if (arr[i][j] < minElement) {
+						minElement = arr[i][j];
+						ROW_index = i;
+						COL_index = j;
+					}
+				}
+			}
+			else if (COLS > 1) {
+				for (int j = 1; j < COLS; j += 2) {
+					if (arr[i][j] < minElement) {
+						minElement = arr[i][j];
+						ROW_index = i;
+						COL_index = j;
+					}
+				}
 			}
 		}
 	}
